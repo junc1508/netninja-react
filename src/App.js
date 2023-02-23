@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+// this is the root component with sub-components
+//nav bar, 
+//routes: home page, create, blogdetails
 
+import Navbar from './Navbar';
+import Home from './Home';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Create from './Create';
+import BlogDetails from './BlogDetails';
+import NotFound from './NotFound';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        {/* Navbar will always show because it is not in the Switch */}
+        <Navbar />
+        <div className="content">
+          {/* create routes with react-router */}
+          <Switch>
+            {/*show Home in div content when visit path / */}
+            <Route exact path="/">
+              <Home />
+            </Route>
+            {/* create new page */}
+            <Route path="/create">
+              <Create />
+            </Route>
+            {/* access blogs by id - route parameter */}
+            <Route path="/blogs/:id">
+              <BlogDetails />
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
 }
 
